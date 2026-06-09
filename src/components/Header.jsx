@@ -4,7 +4,7 @@ function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-slate-900 px-4 py-2 text-sky-700">
+    <header className="sticky top-0 z-50 bg-slate-900 px-4 py-2 text-sky-300">
       <div className="flex items-center justify-between">
         <a href="#inicio" className="flex items-center">
           <img
