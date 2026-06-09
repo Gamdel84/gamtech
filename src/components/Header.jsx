@@ -32,13 +32,32 @@ function Header() {
 
       {menuOpen && (
         <nav className="mt-4 flex flex-col gap-4 text-sm font-medium md:hidden">
-          <a href="#inicio">Inicio</a>
-          <a href="#servicios">Servicios</a>
-          <a href="#presupuesto">Presupuesto</a>
-          <a href="#sobre-mi">Sobre mí</a>
-          <a href="#contacto">Contacto</a>
+          <a href="#inicio" onClick={() => setMenuOpen(false)}>
+            Inicio
+          </a>
+
+          <a href="#servicios" onClick={() => setMenuOpen(false)}>
+            Servicios
+          </a>
+
+          <a href="#presupuesto" onClick={() => setMenuOpen(false)}>
+            Presupuesto
+          </a>
+
+          <a href="#sobre-mi" onClick={() => setMenuOpen(false)}>
+            Sobre mí
+          </a>
+
+          <a href="#opiniones" onClick={() => setMenuOpen(false)}>
+            Opiniones
+          </a>
+
+          <a href="#contacto" onClick={() => setMenuOpen(false)}>
+            Contacto
+          </a>
         </nav>
       )}
+      
       <hr className="border-2 border-sky-500"/>
     </header>
   );
