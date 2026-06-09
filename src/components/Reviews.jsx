@@ -227,9 +227,7 @@ function Reviews() {
               </p>
             )}
 
-            <p className="mt-3 text-center text-sm text-slate-500">
-              Las opiniones se publican luego de ser revisadas.
-            </p>
+            
           </form>
         </div>
       </div>

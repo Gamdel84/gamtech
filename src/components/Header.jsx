@@ -22,11 +22,11 @@ function Header() {
         </button>
 
         <nav className="hidden gap-2 text-base font-medium md:flex">
-          <a href="#inicio" className= "p-2 rounded-md border-2 border-sky-500 hover:bg-sky-700 hover:text-white">Inicio</a>
-          <a href="#servicios" className= "p-2 rounded-md border-2 border-sky-500 hover:bg-sky-700 hover:text-white">Servicios</a>
-          <a href="#presupuesto" className= "p-2 rounded-md border-2 border-sky-500 hover:bg-sky-700 hover:text-white">Presupuesto</a>
-          <a href="#sobre-mi" className= "p-2 rounded-md border-2 border-sky-500 hover:bg-sky-700 hover:text-white">Sobre mí</a>
-          <a href="#contacto" className= "p-2 rounded-md border-2 border-sky-500 hover:bg-sky-700 hover:text-white">Contacto</a>
+          <a href="#inicio" className= "p-1 rounded-md border-2 border-sky-500 hover:bg-sky-700 hover:text-white">Inicio</a>
+          <a href="#servicios" className= "p-1 rounded-md border-2 border-sky-500 hover:bg-sky-700 hover:text-white">Servicios</a>
+          <a href="#presupuesto" className= "p-1 rounded-md border-2 border-sky-500 hover:bg-sky-700 hover:text-white">Presupuesto</a>
+          <a href="#sobre-mi" className= "p-1 rounded-md border-2 border-sky-500 hover:bg-sky-700 hover:text-white">Sobre mí</a>
+          <a href="#contacto" className= "p-1 rounded-md border-2 border-sky-500 hover:bg-sky-700 hover:text-white">Contacto</a>
         </nav>
       </div>
 
