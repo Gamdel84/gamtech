@@ -6,6 +6,7 @@ import Reviews from "../components/Reviews";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import BudgetEstimator from "../components/BudgetEstimator";
+import WhatsappButton from "../components/WhatsappButton";
 
 function Home() {
   return (
@@ -22,6 +23,7 @@ function Home() {
       </main>
 
       <Footer />
+      <WhatsappButton />
     </>
   );
 }

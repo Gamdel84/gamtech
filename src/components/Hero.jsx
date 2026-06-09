@@ -13,15 +13,7 @@ function Hero() {
         <p className="rounded-md bg-slate-800 px-2 py-2 text-center text-lg font-medium text-sky-300">
           Servicios de electricidad, seguridad electrónica y Climatización
         </p>
-        <hr className="my-2"/>
-        <div className="text-center">
-          <a
-            href="#contacto"
-            className="mt-2 mb-2 inline-block rounded-md bg-emerald-400 px-5 py-2 text-lg font-semibold text-white transition hover:bg-cyan-600"
-          >
-            Pedí tu presupuesto
-          </a>
-        </div>
+        <hr className="my-2"/>       
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-2">
           <img
