@@ -196,9 +196,7 @@ function BudgetEstimator() {
         </h2>
 
         <p className="mx-auto mt-4 max-w-3xl text-center text-lg text-slate-300">
-          Seleccioná las tareas que necesitás realizar y obtené una estimación
-          orientativa. El valor final puede variar según materiales, estado de la
-          instalación, accesibilidad y evaluación técnica previa.
+          Calcula un presupuesto estimativo para tus necesidades. Tené en cuenta que puede estar sujeto a variaciones, segun materiales necesarios y dificultades por imprevistos y estructuras. Si lo que necesitas no se encuentra, podés consultar por whatsapp, directamente.
         </p>
 
         <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
@@ -387,11 +385,7 @@ function BudgetEstimator() {
           <h3 className="font-bold text-sky-400">Climatización</h3>
 
           <p className="mt-2 text-sm leading-relaxed">
-            Para instalaciones de aire acondicionado, realizo cálculo térmico
-            del espacio con la intención de sugerir la mejor opción y optimizar
-            la ambientación del ambiente. Las instalaciones estándar pueden
-            variar si se excede la cantidad de materiales contemplada según el
-            manual del equipo.
+            CÁLCULO TËRMICO: ponete en contacto y acordamos una visita para calcular qué equipo te conviene más para climatizar tu espacio.
           </p>
         </div>
       </div>

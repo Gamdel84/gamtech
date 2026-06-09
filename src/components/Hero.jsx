@@ -17,12 +17,6 @@ function Hero() {
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-2">
           <img
-            src="/GAM_climatizacion.png"
-            alt="Servicio de climatización"
-            className="mx-auto w-full max-w-xs rounded-lg object-contain shadow-lg sm:max-w-sm lg:max-w-sm"
-          />
-
-          <img
             src="/GAM_instalaciones_electricas.png"
             alt="Servicio de instalaciones eléctricas"
             className="mx-auto w-full max-w-xs rounded-lg object-contain shadow-lg sm:max-w-sm lg:max-w-sm"
@@ -31,6 +25,12 @@ function Hero() {
           <img
             src="/GAM_seguridad_electronica.png"
             alt="Servicio de seguridad electrónica"
+            className="mx-auto w-full max-w-xs rounded-lg object-contain shadow-lg sm:max-w-sm lg:max-w-sm"
+          />
+
+          <img
+            src="/GAM_climatizacion.png"
+            alt="Servicio de climatización"
             className="mx-auto w-full max-w-xs rounded-lg object-contain shadow-lg sm:max-w-sm lg:max-w-sm"
           />
         </div>

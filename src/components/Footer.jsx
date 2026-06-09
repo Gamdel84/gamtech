@@ -20,13 +20,7 @@ function Footer() {
         </div>
 
         <div className="flex flex-col items-center gap-2 md:items-end">
-          <a
-            href="https://wa.me/5491162623005?text=Hola%20Gustavo,%20quiero%20consultar%20por%20un%20presupuesto."
-            target="_blank"
-            className="mt-2 mb-2 inline-block rounded-md bg-emerald-400 px-5 py-2 text-lg font-semibold text-white transition hover:bg-cyan-600"
-          >
-            Contactar por WhatsApp
-          </a>
+          
 
           <Link
             to="/admin"

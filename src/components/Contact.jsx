@@ -9,6 +9,7 @@ function Contact() {
         <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-700">
           Consultame por WhatsApp para coordinar una visita, resolver una duda
           o solicitar un presupuesto para tu hogar o comercio.
+          Zona del AMBA y Gran Buenos Aires.
         </p>
 
         <div className="mt-8">
