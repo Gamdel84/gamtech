@@ -24,6 +24,7 @@ function Header() {
         <nav className="hidden gap-2 text-base font-medium md:flex">
           <a href="#inicio" className= "p-2 rounded-md border-2 border-sky-500 hover:bg-sky-700 hover:text-white">Inicio</a>
           <a href="#servicios" className= "p-2 rounded-md border-2 border-sky-500 hover:bg-sky-700 hover:text-white">Servicios</a>
+          <a href="#presupuesto" className= "p-2 rounded-md border-2 border-sky-500 hover:bg-sky-700 hover:text-white">Presupuesto</a>
           <a href="#sobre-mi" className= "p-2 rounded-md border-2 border-sky-500 hover:bg-sky-700 hover:text-white">Sobre mí</a>
           <a href="#contacto" className= "p-2 rounded-md border-2 border-sky-500 hover:bg-sky-700 hover:text-white">Contacto</a>
         </nav>
@@ -33,6 +34,7 @@ function Header() {
         <nav className="mt-4 flex flex-col gap-4 text-sm font-medium md:hidden">
           <a href="#inicio">Inicio</a>
           <a href="#servicios">Servicios</a>
+          <a href="#presupuesto">Presupuesto</a>
           <a href="#sobre-mi">Sobre mí</a>
           <a href="#contacto">Contacto</a>
         </nav>
