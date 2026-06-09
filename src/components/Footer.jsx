@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Footer() {
   return (
     <footer className="bg-slate-900 px-6 py-8 text-slate-300">
@@ -17,13 +19,22 @@ function Footer() {
           <p className="mt-1">Todos los derechos reservados</p>
         </div>
 
-        <a
-          href="https://wa.me/5491162623005?text=Hola%20Gustavo,%20quiero%20consultar%20por%20un%20presupuesto."
-          target="_blank"
-          className="mt-2 mb-2 inline-block rounded-md bg-emerald-400 px-5 py-2 text-lg font-semibold text-white transition hover:bg-cyan-600"
-        >
-          Contactar por WhatsApp
-        </a>
+        <div className="flex flex-col items-center gap-2 md:items-end">
+          <a
+            href="https://wa.me/5491162623005?text=Hola%20Gustavo,%20quiero%20consultar%20por%20un%20presupuesto."
+            target="_blank"
+            className="mt-2 mb-2 inline-block rounded-md bg-emerald-400 px-5 py-2 text-lg font-semibold text-white transition hover:bg-cyan-600"
+          >
+            Contactar por WhatsApp
+          </a>
+
+          <Link
+            to="/admin"
+            className="text-xs text-slate-500 transition hover:text-slate-300"
+          >
+            Admin
+          </Link>
+        </div>
       </div>
     </footer>
   );
