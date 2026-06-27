@@ -106,7 +106,7 @@ function Carrusel() {
               className="h-full w-full object-cover transition duration-700 hover:scale-105"
             />
 
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/40 to-transparent" />
 
             <div className="absolute bottom-0 left-0 p-4">
               <p className="text-sm font-semibold uppercase tracking-wide text-sky-300">
