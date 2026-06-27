@@ -1,1 +1,53 @@
 @import "tailwindcss";
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatSoft {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes glowMove {
+  0% {
+    transform: translateX(-20px) translateY(0);
+  }
+
+  50% {
+    transform: translateX(20px) translateY(20px);
+  }
+
+  100% {
+    transform: translateX(-20px) translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.8s ease-out both;
+}
+
+.animate-float-soft {
+  animation: floatSoft 4s ease-in-out infinite;
+}
+
+.animate-glow-move {
+  animation: glowMove 8s ease-in-out infinite;
+}

@@ -90,6 +90,7 @@ function Reviews() {
   }
 
   return (
+    <>
     <section id="opiniones" className="scroll-mt-32 bg-slate-100 px-6 py-14">
       <div className="mx-auto max-w-6xl">
         <h2 className="text-center text-2xl font-bold text-slate-900 md:text-3xl">
@@ -232,6 +233,8 @@ function Reviews() {
         </div>
       </div>
     </section>
+    <hr className="my-0.2 border-slate-700" />
+    </>
   );
 }
 

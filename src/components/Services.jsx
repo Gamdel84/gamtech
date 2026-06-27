@@ -28,6 +28,7 @@ function Services() {
         <h2 className="text-center text-2xl font-bold text-slate-900 md:text-3xl">
           Servicios
         </h2>
+        <h3 className="mt-4 text-center text-lg text-slate-700">Todos los servicios tienen garantía</h3>
 
         <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
           {services.map((service) => (
@@ -39,6 +40,13 @@ function Services() {
           ))}
         </div>
       </div>
+      <div className="mt-8 rounded-xl bg-slate-800 p-5 text-slate-200">
+          <h3 className="font-bold text-sky-400">Climatización</h3>
+
+          <p className="mt-2 text-2xl leading-relaxed">
+            <b className="text-2xl text-red-500 underline">CÁLCULO TÉRMICO</b><b className= "text-2xl text-red-500">:</b> Si aún no compraste tu equipo, puedo asesorarte de forma gratuita, para comprar con seguridad y garantizar una buena climatización todo el año.
+          </p>
+        </div>
     </section>
   );
 }

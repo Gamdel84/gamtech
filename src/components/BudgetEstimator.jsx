@@ -186,6 +186,7 @@ function BudgetEstimator() {
   )}`;
 
   return (
+    <>
     <section
       id="presupuesto"
       className="scroll-mt-32 bg-slate-900 px-6 py-14 text-white"
@@ -196,7 +197,7 @@ function BudgetEstimator() {
         </h2>
 
         <p className="mx-auto mt-4 max-w-3xl text-center text-lg text-slate-300">
-          Calcula un presupuesto estimativo para tus necesidades. Tené en cuenta que puede estar sujeto a variaciones, segun materiales necesarios y dificultades por imprevistos y estructuras. Si lo que necesitas no se encuentra, podés consultar por whatsapp, directamente.
+          <b className="text-red-500 text-4xl">* </b>Seleccione las tareas que requiere y podrá obtener un presupuesto estimado, el cual puede variar según las condiciones del área de trabajo, materiales y tiempo de ejecución. 
         </p>
 
         <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
@@ -363,9 +364,7 @@ function BudgetEstimator() {
                   </p>
 
                   <p className="mt-3 text-sm text-slate-300">
-                    El valor final puede variar según materiales necesarios,
-                    estado de la instalación, accesibilidad, complejidad y
-                    evaluación técnica previa.
+                    Le recuerdo que el presupuesto no es definitivo, hasta tanto no se realice una evaluación técnica de forma presencial.
                   </p>
                 </div>
 
@@ -381,15 +380,11 @@ function BudgetEstimator() {
           </div>
         </div>
 
-        <div className="mt-8 rounded-xl bg-slate-800 p-5 text-slate-200">
-          <h3 className="font-bold text-sky-400">Climatización</h3>
-
-          <p className="mt-2 text-sm leading-relaxed">
-            CÁLCULO TËRMICO: ponete en contacto y acordamos una visita para calcular qué equipo te conviene más para climatizar tu espacio.
-          </p>
-        </div>
+        
       </div>
     </section>
+    <hr className="my-0.2 border-slate-100" />
+    </>
   );
 }
 
