@@ -81,7 +81,7 @@ function Carrusel() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setStartIndex((currentIndex) => (currentIndex + 3) % slides.length);
-    }, 4000);
+    }, 5000);
 
     return () => clearInterval(intervalId);
   }, []);
