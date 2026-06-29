@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function Footer() {
+const Footer = () => {
   return (
     <footer className="bg-slate-900 px-6 py-8 text-slate-300">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 text-center md:flex-row md:justify-between md:text-left">
@@ -32,6 +32,6 @@ function Footer() {
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Header() {
+const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -61,6 +61,6 @@ function Header() {
       <hr className="border-2 border-sky-500"/>
     </header>
   );
-}
+};
 
 export default Header;

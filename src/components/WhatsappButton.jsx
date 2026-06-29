@@ -1,4 +1,4 @@
-function WhatsappButton() {
+const WhatsappButton = () => {
   return (
     <a
       href="https://wa.me/5491162623005?text=Hola%20Gustavo,%20quiero%20consultar%20por%20un%20presupuesto."
@@ -14,6 +14,6 @@ function WhatsappButton() {
       />
     </a>
   );
-}
+};
 
 export default WhatsappButton;

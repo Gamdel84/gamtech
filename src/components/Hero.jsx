@@ -1,6 +1,6 @@
 import Carrusel from "./Carrusel";
 
-function Hero() {
+const Hero = () => {
   return (
     <section
       id="inicio"
@@ -27,6 +27,6 @@ function Hero() {
       </div>
     </section>
   );
-}
+};
 
 export default Hero;

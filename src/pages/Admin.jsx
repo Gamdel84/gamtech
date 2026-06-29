@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 
-function Admin() {
+const Admin = () => {
   const [user, setUser] = useState(null);
   const [checkingSession, setCheckingSession] = useState(true);
 
@@ -16,7 +16,7 @@ function Admin() {
   const [adminMessage, setAdminMessage] = useState("");
 
   useEffect(() => {
-    async function getCurrentUser() {
+    const getCurrentUser = async () => {
       const { data, error } = await supabase.auth.getUser();
 
       if (error) {
@@ -25,7 +25,7 @@ function Admin() {
 
       setUser(data?.user ?? null);
       setCheckingSession(false);
-    }
+    };
 
     getCurrentUser();
   }, []);
@@ -36,7 +36,7 @@ function Admin() {
     }
   }, [user]);
 
-  async function handleLogin(event) {
+  const handleLogin = async (event) => {
     event.preventDefault();
 
     setLoginLoading(true);
@@ -58,14 +58,14 @@ function Admin() {
     setUser(data.user);
     setEmail("");
     setPassword("");
-  }
+  };
 
-  async function handleLogout() {
+  const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
-  }
+  };
 
-  async function getPendingReviews() {
+  const getPendingReviews = async () => {
     setReviewsLoading(true);
     setAdminMessage("");
 
@@ -87,9 +87,9 @@ function Admin() {
     }
 
     setPendingReviews(data);
-  }
+  };
 
-  async function approveReview(id) {
+  const approveReview = async (id) => {
     setAdminMessage("");
 
     const { error } = await supabase
@@ -108,9 +108,9 @@ function Admin() {
     );
 
     setAdminMessage("Opinión aprobada correctamente.");
-  }
+  };
 
-  async function deleteReview(id) {
+  const deleteReview = async (id) => {
     const confirmDelete = window.confirm(
       "¿Seguro que querés eliminar esta opinión?"
     );
@@ -132,7 +132,7 @@ function Admin() {
     );
 
     setAdminMessage("Opinión eliminada correctamente.");
-  }
+  };
 
   if (checkingSession) {
     return (
@@ -307,6 +307,6 @@ function Admin() {
       </div>
     </main>
   );
-}
+};
 
 export default Admin;

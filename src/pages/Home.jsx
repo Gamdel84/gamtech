@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
 import BudgetEstimator from "../components/BudgetEstimator";
 import WhatsappButton from "../components/WhatsappButton";
 
-function Home() {
+const Home = () => {
   return (
     <>
       <Header />
@@ -26,6 +26,6 @@ function Home() {
       <WhatsappButton />
     </>
   );
-}
+};
 
 export default Home;

@@ -1,4 +1,4 @@
-function About() {
+const About = () => {
   return (
     <section id="sobre-mi" className="scroll-mt-28 bg-slate-900 px-6 py-14 text-white">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-2 md:items-center">
@@ -39,6 +39,6 @@ function About() {
       </div>
     </section>
   );
-}
+};
 
 export default About;

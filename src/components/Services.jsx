@@ -21,7 +21,7 @@ const services = [
   },
 ];
 
-function Services() {
+const Services = () => {
   return (
     <section id="servicios" className="scroll-mt-32 bg-slate-100 px-6 py-12">
       <div className="mx-auto max-w-6xl">
@@ -49,6 +49,6 @@ function Services() {
         </div>
     </section>
   );
-}
+};
 
 export default Services;

@@ -91,7 +91,7 @@ const tasks = [
   },
 ];
 
-function BudgetEstimator() {
+const BudgetEstimator = () => {
   const [selectedTaskId, setSelectedTaskId] = useState(tasks[0].id);
   const [quantity, setQuantity] = useState(1);
   const [hasMaterials, setHasMaterials] = useState("yes");
@@ -108,15 +108,15 @@ function BudgetEstimator() {
   const minTotal = Math.round(total * 0.9);
   const maxTotal = Math.round(total * 1.15);
 
-  function formatCurrency(value) {
+  const formatCurrency = (value) => {
     return value.toLocaleString("es-AR", {
       style: "currency",
       currency: "ARS",
       maximumFractionDigits: 0,
     });
-  }
+  };
 
-  function handleAddTask(event) {
+  const handleAddTask = (event) => {
     event.preventDefault();
 
     if (!selectedTask || quantity < 1) return;
@@ -149,13 +149,13 @@ function BudgetEstimator() {
     setHasMaterials("yes");
     setNotes("");
     setReferenceValue("");
-  }
+  };
 
-  function handleRemoveTask(id) {
+  const handleRemoveTask = (id) => {
     setBudgetItems(budgetItems.filter((item) => item.id !== id));
-  }
+  };
 
-  function buildWhatsAppMessage() {
+  const buildWhatsAppMessage = () => {
     const taskList = budgetItems
       .map((item) => {
         const materialsText =
@@ -179,7 +179,7 @@ function BudgetEstimator() {
     )} y ${formatCurrency(
       maxTotal
     )}.\n\nEntiendo que el valor final puede variar según materiales, estado de la instalación, accesibilidad y evaluación técnica previa.`;
-  }
+  };
 
   const whatsappUrl = `https://wa.me/5491162623005?text=${encodeURIComponent(
     buildWhatsAppMessage()

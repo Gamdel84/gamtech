@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 
-function Reviews() {
+const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -15,7 +15,7 @@ function Reviews() {
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState("");
 
-  async function getReviews() {
+  const getReviews = async () => {
     const { data, error } = await supabase
       .from("reviews")
       .select("id, name, service, rating, comment, created_at")
@@ -29,22 +29,22 @@ function Reviews() {
     }
 
     setLoading(false);
-  }
+  };
 
   useEffect(() => {
     getReviews();
   }, []);
 
-  function handleChange(event) {
+  const handleChange = (event) => {
     const { name, value } = event.target;
 
     setFormData({
       ...formData,
       [name]: value,
     });
-  }
+  };
 
-  async function handleSubmit(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     console.log("Enviando opinión...", formData);
@@ -87,7 +87,7 @@ function Reviews() {
     } finally {
       setSending(false);
     }
-  }
+  };
 
   return (
     <>
@@ -236,6 +236,6 @@ function Reviews() {
     <hr className="my-0.2 border-slate-700" />
     </>
   );
-}
+};
 
 export default Reviews;

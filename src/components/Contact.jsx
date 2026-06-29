@@ -1,4 +1,4 @@
-function Contact() {
+const Contact = () => {
   return (
     <section id="contacto" className="scroll-mt-32 bg-slate-100 px-6 py-14">
       <div className="mx-auto max-w-4xl rounded-2xl bg-white p-8 text-center shadow-lg">
@@ -51,6 +51,6 @@ function Contact() {
       </div>
     </section>
   );
-}
+};
 
 export default Contact;
