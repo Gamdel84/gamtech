@@ -19,6 +19,60 @@ const slides = [
     title: "Aire acondicionado",
     text: "Instalación, mantenimiento y revisión de equipos.",
   },
+  {
+    src: "/hero/ventecho3.jpg",
+    category: "Electricidad",
+    title: "Tableros y protecciones",
+    text: "Térmicas, disyuntores y reparaciones.",
+  },
+  {
+    src: "/hero/camint2.jpg",
+    category: "Seguridad electrónica",
+    title: "Alarmas y sensores",
+    text: "Soluciones para hogares y comercios.",
+  },
+  {
+    src: "/hero/manifold1.jpg",
+    category: "Climatización",
+    title: "Mantenimiento",
+    text: "Limpieza, control y diagnóstico técnico.",
+  },
+  {
+    src: "/hero/lumi1.jpg",
+    category: "Electricidad",
+    title: "Instalaciones eléctricas",
+    text: "Trabajos domiciliarios y comerciales.",
+  },
+  {
+    src: "/hero/biometrico1.jpg",
+    category: "Seguridad electrónica",
+    title: "Cámaras de seguridad",
+    text: "Instalación y configuración de sistemas CCTV.",
+  },
+  {
+    src: "/hero/cond1.jpg",
+    category: "Climatización",
+    title: "Aire acondicionado",
+    text: "Instalación, mantenimiento y revisión de equipos.",
+  },
+  {
+    src: "/hero/elec2.jpg",
+    category: "Electricidad",
+    title: "Tableros y protecciones",
+    text: "Térmicas, disyuntores y reparaciones.",
+  },
+  {
+    src: "/hero/rack1.jpg",
+    category: "Seguridad electrónica",
+    title: "Alarmas y sensores",
+    text: "Soluciones para hogares y comercios.",
+  },
+  {
+    src: "/hero/vacio.jpg",
+    category: "Climatización",
+    title: "Mantenimiento",
+    text: "Limpieza, control y diagnóstico técnico.",
+  },
 ];
 
 const Carrusel = () => {
