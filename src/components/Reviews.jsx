@@ -59,7 +59,6 @@ const Reviews = () => {
           service: formData.service.trim(),
           rating: Number(formData.rating),
           comment: formData.comment.trim(),
-          approved: false,
         },
       ]);
 
@@ -72,7 +71,7 @@ const Reviews = () => {
       }
 
       setMessage(
-        "Gracias por dejar tu opinión. Será publicada cuando sea aprobada."
+        "Gracias por dejar tu opinión."
       );
 
       setFormData({
