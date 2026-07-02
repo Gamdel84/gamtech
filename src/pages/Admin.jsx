@@ -36,6 +36,43 @@ const Admin = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (!user) return;
+
+    const channel = supabase
+      .channel("reviews-inserts")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "reviews",
+        },
+        (payload) => {
+          const newReview = payload.new;
+
+          setPendingReviews((currentReviews) => {
+            const alreadyExists = currentReviews.some(
+              (review) => review.id === newReview.id
+            );
+
+            if (alreadyExists) {
+              return currentReviews;
+            }
+
+            return [newReview, ...currentReviews];
+          });
+
+          setAdminMessage(`Nueva opinión pendiente de ${newReview.name}.`);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user]);
+
   const handleLogin = async (event) => {
     event.preventDefault();
 
@@ -63,6 +100,8 @@ const Admin = () => {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
+    setPendingReviews([]);
+    setAdminMessage("");
   };
 
   const getPendingReviews = async () => {
