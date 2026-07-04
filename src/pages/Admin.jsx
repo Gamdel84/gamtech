@@ -11,9 +11,33 @@ const Admin = () => {
   const [loginLoading, setLoginLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const [pendingReviews, setPendingReviews] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [reviewsLoading, setReviewsLoading] = useState(false);
   const [adminMessage, setAdminMessage] = useState("");
+
+  const formatDate = (dateValue) => {
+    return new Date(dateValue).toLocaleDateString("es-AR");
+  };
+
+  const getReviews = async () => {
+    setReviewsLoading(true);
+    setAdminMessage("");
+
+    const { data, error } = await supabase
+      .from("reviews")
+      .select("id, name, service, rating, comment, approved, created_at")
+      .order("created_at", { ascending: false });
+
+    setReviewsLoading(false);
+
+    if (error) {
+      console.error("Error al cargar opiniones:", error.message);
+      setAdminMessage("No se pudieron cargar las opiniones.");
+      return;
+    }
+
+    setReviews(data);
+  };
 
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -32,7 +56,7 @@ const Admin = () => {
 
   useEffect(() => {
     if (user) {
-      getPendingReviews();
+      getReviews();
     }
   }, [user]);
 
@@ -51,7 +75,7 @@ const Admin = () => {
         (payload) => {
           const newReview = payload.new;
 
-          setPendingReviews((currentReviews) => {
+          setReviews((currentReviews) => {
             const alreadyExists = currentReviews.some(
               (review) => review.id === newReview.id
             );
@@ -63,7 +87,7 @@ const Admin = () => {
             return [newReview, ...currentReviews];
           });
 
-          setAdminMessage(`Nueva opinión pendiente de ${newReview.name}.`);
+          setAdminMessage(`Nueva opinión recibida de ${newReview.name}.`);
         }
       )
       .subscribe();
@@ -100,53 +124,8 @@ const Admin = () => {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
-    setPendingReviews([]);
+    setReviews([]);
     setAdminMessage("");
-  };
-
-  const getPendingReviews = async () => {
-    setReviewsLoading(true);
-    setAdminMessage("");
-
-    const { data, error } = await supabase
-      .from("reviews")
-      .select("id, name, service, rating, comment, approved, created_at")
-      .eq("approved", false)
-      .order("created_at", { ascending: false });
-
-    console.log("Opiniones pendientes:", data);
-    console.log("Error pendientes:", error);
-
-    setReviewsLoading(false);
-
-    if (error) {
-      console.error("Error al cargar opiniones pendientes:", error.message);
-      setAdminMessage("No se pudieron cargar las opiniones pendientes.");
-      return;
-    }
-
-    setPendingReviews(data);
-  };
-
-  const approveReview = async (id) => {
-    setAdminMessage("");
-
-    const { error } = await supabase
-      .from("reviews")
-      .update({ approved: true })
-      .eq("id", id);
-
-    if (error) {
-      console.error("Error al aprobar opinión:", error.message);
-      setAdminMessage("No se pudo aprobar la opinión.");
-      return;
-    }
-
-    setPendingReviews((currentReviews) =>
-      currentReviews.filter((review) => review.id !== id)
-    );
-
-    setAdminMessage("Opinión aprobada correctamente.");
   };
 
   const deleteReview = async (id) => {
@@ -166,7 +145,7 @@ const Admin = () => {
       return;
     }
 
-    setPendingReviews((currentReviews) =>
+    setReviews((currentReviews) =>
       currentReviews.filter((review) => review.id !== id)
     );
 
@@ -191,7 +170,7 @@ const Admin = () => {
           <h1 className="text-2xl font-bold text-slate-900">Panel admin</h1>
 
           <p className="mt-2 text-slate-600">
-            Iniciá sesión para gestionar las opiniones.
+            Iniciá sesión para gestionar las opiniones publicadas.
           </p>
 
           <div className="mt-6">
@@ -263,19 +242,19 @@ const Admin = () => {
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <h2 className="text-2xl font-bold text-slate-900">
-                Opiniones pendientes
+                Opiniones recibidas
               </h2>
 
               <p className="mt-2 text-slate-600">
-                Revisá las opiniones enviadas por clientes antes de publicarlas.
+                Administrá las opiniones publicadas en la landing.
               </p>
             </div>
 
             <button
-              onClick={getPendingReviews}
+              onClick={getReviews}
               className="rounded-md bg-sky-700 px-5 py-2 font-semibold text-white transition hover:bg-sky-800"
             >
-              Actualizar
+              Actualizar opiniones
             </button>
           </div>
 
@@ -287,14 +266,14 @@ const Admin = () => {
 
           <div className="mt-6">
             {reviewsLoading ? (
-              <p className="text-slate-600">Cargando opiniones pendientes...</p>
-            ) : pendingReviews.length === 0 ? (
+              <p className="text-slate-600">Cargando opiniones...</p>
+            ) : reviews.length === 0 ? (
               <p className="rounded-lg bg-slate-100 p-4 text-slate-600">
-                No hay opiniones pendientes.
+                No hay opiniones publicadas.
               </p>
             ) : (
               <div className="grid grid-cols-1 gap-4">
-                {pendingReviews.map((review) => (
+                {reviews.map((review) => (
                   <article
                     key={review.id}
                     className="rounded-xl border border-slate-200 bg-slate-50 p-5"
@@ -307,6 +286,10 @@ const Admin = () => {
 
                         <p className="mt-1 text-sm text-slate-500">
                           {review.service}
+                        </p>
+
+                        <p className="mt-1 text-xs text-slate-400">
+                          {formatDate(review.created_at)}
                         </p>
 
                         <div className="mt-3 text-yellow-500">
@@ -322,13 +305,6 @@ const Admin = () => {
                       </div>
 
                       <div className="flex gap-2 md:flex-col">
-                        <button
-                          onClick={() => approveReview(review.id)}
-                          className="rounded-md bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-600"
-                        >
-                          Aprobar
-                        </button>
-
                         <button
                           onClick={() => deleteReview(review.id)}
                           className="rounded-md bg-red-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-600"

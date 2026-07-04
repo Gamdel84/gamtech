@@ -77,14 +77,17 @@ const slides = [
 
 const Carrusel = () => {
   const [startIndex, setStartIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setStartIndex((currentIndex) => (currentIndex + 3) % slides.length);
+      if (!isPaused) {
+        setStartIndex((currentIndex) => (currentIndex + 3) % slides.length);
+      }
     }, 5000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [isPaused]);
 
   const visibleSlides = [
     slides[startIndex],
@@ -93,7 +96,11 @@ const Carrusel = () => {
   ];
 
   return (
-    <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-3">
+    <div
+      className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-3"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       {visibleSlides.map((slide) => (
         <article
           key={`${slide.src}-${slide.title}`}

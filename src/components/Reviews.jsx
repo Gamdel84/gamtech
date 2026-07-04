@@ -15,6 +15,10 @@ const Reviews = () => {
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState("");
 
+  const formatDate = (dateValue) => {
+    return new Date(dateValue).toLocaleDateString("es-AR");
+  };
+
   const getReviews = async () => {
     setLoading(true);
 
@@ -70,7 +74,7 @@ const Reviews = () => {
         return;
       }
 
-      setMessage("Gracias por dejar tu opinión. Ya fue publicada.");
+      setMessage("¡Gracias! Tu opinión ya fue publicada.");
 
       setFormData({
         name: "",
@@ -138,6 +142,10 @@ const Reviews = () => {
 
                         <p className="mt-1 text-sm text-slate-500">
                           {review.service}
+                        </p>
+
+                        <p className="mt-1 text-xs text-slate-400">
+                          {formatDate(review.created_at)}
                         </p>
                       </div>
                     </article>

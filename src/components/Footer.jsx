@@ -24,9 +24,11 @@ const Footer = () => {
 
           <Link
             to="/admin"
-            className="text-xs text-slate-500 transition hover:text-slate-300"
+            aria-label="Panel admin"
+            title="Panel admin"
+            className="text-lg leading-none text-slate-700 transition hover:text-slate-400"
           >
-            Admin
+            •
           </Link>
         </div>
       </div>
