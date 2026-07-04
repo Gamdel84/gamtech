@@ -84,7 +84,7 @@ const Carrusel = () => {
       if (!isPaused) {
         setStartIndex((currentIndex) => (currentIndex + 3) % slides.length);
       }
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(intervalId);
   }, [isPaused]);
