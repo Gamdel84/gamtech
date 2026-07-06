@@ -6,14 +6,14 @@ const tasks = [
     category: "Electricidad",
     name: "Reparación de boca de electricidad",
     type: "fixed",
-    price: 20000,
+    price: 16000,
   },
   {
     id: "instalacion-boca",
     category: "Electricidad",
     name: "Instalación de boca de electricidad",
     type: "fixed",
-    price: 35000,
+    price: 25000,
   },
   {
     id: "termica",
@@ -34,7 +34,7 @@ const tasks = [
     category: "Electricidad",
     name: "Instalación de ventilador de techo",
     type: "fixed",
-    price: 75000,
+    price: 70000,
   },
   {
     id: "artefacto-iluminacion",
@@ -48,7 +48,7 @@ const tasks = [
     category: "Montajes",
     name: "Montaje de TV en pared",
     type: "fixed",
-    price: 40000,
+    price: 45000,
   },
   {
     id: "cctv",
