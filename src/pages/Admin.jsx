@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
+import AdminQuickCalculator from "../components/AdminQuickCalculator";
 
 const Admin = () => {
   const [user, setUser] = useState(null);
@@ -255,7 +256,7 @@ const Admin = () => {
               className="rounded-md bg-sky-700 px-5 py-2 font-semibold text-white transition hover:bg-sky-800"
             >
               Actualizar opiniones
-            </button>
+            </button>            
           </div>
 
           {adminMessage && (
@@ -317,6 +318,7 @@ const Admin = () => {
                 ))}
               </div>
             )}
+            <AdminQuickCalculator />
           </div>
         </section>
       </div>
