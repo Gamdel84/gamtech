@@ -20,6 +20,8 @@ const createEmptyMaterial = () => {
 };
 
 const AdminQuickCalculator = () => {
+  const [clientName, setClientName] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
   const [materials, setMaterials] = useState([createEmptyMaterial()]);
   const [labor, setLabor] = useState("");
   const [copyMessage, setCopyMessage] = useState("");
@@ -88,6 +90,8 @@ const AdminQuickCalculator = () => {
   const handleClear = () => {
     const emptyMaterial = createEmptyMaterial();
 
+    setClientName("");
+    setTaskDescription("");
     setMaterials([emptyMaterial]);
     setLabor("");
     setCopyMessage("");
@@ -117,253 +121,330 @@ const AdminQuickCalculator = () => {
     const materialsText = materials
       .filter((material) => material.name.trim() || Number(material.price))
       .map((material) => {
-        return `- ${material.name || "Material"}: ${formatCurrency(
-          Number(material.price) || 0
-        )}`;
+        return `- ${material.name || "Material"}`;
       })
       .join("\n");
 
-    return `Presupuesto estimativo - GAM Soluciones Técnicas
+    return `Presupuesto - GAM Soluciones Técnicas
 
-Materiales:
-${materialsText || "Sin materiales cargados."}
+Cliente:
+${clientName.trim() || "Sin especificar"}
 
-Mano de obra: ${formatCurrency(laborAmount)}
+Descripción de tareas:
+${taskDescription.trim() || "Sin descripción detallada."}
 
-Total estimado: ${formatCurrency(total)}
+Materiales necesarios:
+${materialsText || "No incluye materiales o corren por cuenta del cliente."}
+
+Materiales + mano de obra: ${formatCurrency(total)}
 
 El valor puede variar según condiciones reales de instalación, disponibilidad y precio actualizado de materiales.`;
   };
 
-const handleCopyBudget = async () => {
-  const budgetText = buildBudgetText();
+  const handleCopyBudget = async () => {
+    const budgetText = buildBudgetText();
 
-  try {
-    await navigator.clipboard.writeText(budgetText);
-    setCopyMessage("Presupuesto copiado.");
-  } catch (error) {
-    console.error("Error al copiar presupuesto:", error);
-    setCopyMessage("No se pudo copiar automáticamente.");
-  }
-};
+    try {
+      await navigator.clipboard.writeText(budgetText);
+      setCopyMessage("Presupuesto copiado.");
+    } catch (error) {
+      console.error("Error al copiar presupuesto:", error);
+      setCopyMessage("No se pudo copiar automáticamente.");
+    }
+  };
 
-const getImageBase64 = async (imagePath) => {
-  const response = await fetch(imagePath);
-  const blob = await response.blob();
+  const getImageBase64 = async (imagePath) => {
+    const response = await fetch(imagePath);
+    const blob = await response.blob();
 
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
 
-    reader.onloadend = () => {
-      resolve(reader.result);
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
+
+  const handleDownloadPdf = async () => {
+    const doc = new jsPDF();
+
+    const today = new Date().toLocaleDateString("es-AR");
+
+    const validMaterials = materials.filter((material) => {
+      return material.name.trim() || Number(material.price);
+    });
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    const margin = 15;
+    const contentWidth = pageWidth - margin * 2;
+
+    let y = 18;
+
+    const drawPageFrame = () => {
+      doc.setDrawColor(30, 41, 59);
+      doc.setLineWidth(0.6);
+      doc.rect(margin, margin, contentWidth, pageHeight - margin * 2);
+
+      doc.setDrawColor(14, 116, 144);
+      doc.setLineWidth(1.2);
+      doc.line(margin, margin + 28, pageWidth - margin, margin + 28);
     };
 
-    reader.onerror = reject;
-    reader.readAsDataURL(blob);
-  });
-};
+    const drawFooter = () => {
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(8);
+      doc.setTextColor(100, 116, 139);
 
-const handleDownloadPdf = async () => {
-  const doc = new jsPDF();
+      doc.text(
+        "Presupuesto estimativo sujeto a revisión técnica, disponibilidad y precio actualizado de materiales.",
+        pageWidth / 2,
+        pageHeight - 10,
+        { align: "center" }
+      );
+    };
 
-  const today = new Date().toLocaleDateString("es-AR");
+    const addNewPage = () => {
+      drawFooter();
+      doc.addPage();
+      y = 25;
+      drawPageFrame();
+    };
 
-  const validMaterials = materials.filter((material) => {
-    return material.name.trim() || Number(material.price);
-  });
+    drawPageFrame();
 
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const pageHeight = doc.internal.pageSize.getHeight();
+    try {
+      const logoBase64 = await getImageBase64("/logo.png");
 
-  const margin = 15;
-  const contentWidth = pageWidth - margin * 2;
+      const logoProperties = doc.getImageProperties(logoBase64);
 
-  let y = 18;
+      const logoMaxWidth = 34;
+      const logoMaxHeight = 22;
 
-  const drawPageFrame = () => {
-    doc.setDrawColor(30, 41, 59);
-    doc.setLineWidth(0.6);
-    doc.rect(margin, margin, contentWidth, pageHeight - margin * 2);
+      const logoRatio = logoProperties.width / logoProperties.height;
 
-    doc.setDrawColor(14, 116, 144);
-    doc.setLineWidth(1.2);
-    doc.line(margin, margin + 28, pageWidth - margin, margin + 28);
-  };
+      let logoWidth = logoMaxWidth;
+      let logoHeight = logoWidth / logoRatio;
 
-  const drawFooter = () => {
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(8);
-    doc.setTextColor(100, 116, 139);
-
-    doc.text(
-      "Presupuesto estimativo sujeto a revisión técnica, disponibilidad y precio actualizado de materiales.",
-      pageWidth / 2,
-      pageHeight - 10,
-      { align: "center" }
-    );
-  };
-
-  drawPageFrame();
-
-  try {
-  const logoBase64 = await getImageBase64("/logo.png");
-
-  const logoProperties = doc.getImageProperties(logoBase64);
-
-  const logoMaxWidth = 34;
-  const logoMaxHeight = 22;
-
-  const logoRatio = logoProperties.width / logoProperties.height;
-
-  let logoWidth = logoMaxWidth;
-  let logoHeight = logoWidth / logoRatio;
-
-  if (logoHeight > logoMaxHeight) {
-    logoHeight = logoMaxHeight;
-    logoWidth = logoHeight * logoRatio;
-  }
-
-  doc.addImage(logoBase64, "PNG", 20, 18, logoWidth, logoHeight);
-} catch (error) {
-  console.error("No se pudo cargar el logo:", error);
-}
-
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(17);
-  doc.setTextColor(15, 23, 42);
-  doc.text("GAM Soluciones Tecnicas", 55, y + 7);
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(9);
-  doc.setTextColor(51, 65, 85);
-  doc.text("Electricidad · Seguridad electrónica · Climatización", 55, y + 14);
-  doc.text("Instalaciones, reparaciones, mantenimiento y asesoramiento técnico", 55, y + 20);
-
-  y = 54;
-
-  doc.setFillColor(241, 245, 249);
-  doc.roundedRect(20, y, pageWidth - 40, 27, 3, 3, "F");
-
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(13);
-  doc.setTextColor(15, 23, 42);
-  doc.text("Presupuesto estimativo", 25, y + 9);
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(10);
-  doc.setTextColor(51, 65, 85);
-  doc.text(`Fecha: ${today}`, 25, y + 17);
-
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(10);
-  doc.setTextColor(14, 116, 144);
-  doc.text("GAM Soluciones Técnicas", pageWidth - 25, y + 9, {
-    align: "right",
-  });
-
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(51, 65, 85);
-  doc.text("WhatsApp: +54 9 11 6262-3005", pageWidth - 25, y + 17, {
-    align: "right",
-  });
-
-  y += 43;
-
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(12);
-  doc.setTextColor(15, 23, 42);
-  doc.text("Detalle de materiales considerados", 20, y);
-
-  y += 8;
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(10);
-  doc.setTextColor(51, 65, 85);
-
-  if (validMaterials.length === 0) {
-    doc.text("Sin materiales detallados.", 24, y);
-    y += 7;
-  } else {
-    validMaterials.forEach((material) => {
-      const materialName = material.name.trim() || "Material";
-
-      const line = `- ${materialName}`;
-      const lines = doc.splitTextToSize(line, pageWidth - 48);
-
-      if (y > pageHeight - 45) {
-        drawFooter();
-        doc.addPage();
-        y = 25;
-        drawPageFrame();
-
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(12);
-        doc.setTextColor(15, 23, 42);
-        doc.text("Detalle de materiales considerados", 20, y);
-
-        y += 8;
-
-        doc.setFont("helvetica", "normal");
-        doc.setFontSize(10);
-        doc.setTextColor(51, 65, 85);
+      if (logoHeight > logoMaxHeight) {
+        logoHeight = logoMaxHeight;
+        logoWidth = logoHeight * logoRatio;
       }
 
-      doc.text(lines, 24, y);
-      y += lines.length * 6;
+      doc.addImage(logoBase64, "PNG", 20, 18, logoWidth, logoHeight);
+    } catch (error) {
+      console.error("No se pudo cargar el logo:", error);
+    }
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(17);
+    doc.setTextColor(15, 23, 42);
+    doc.text("GAM Soluciones Técnicas", 55, y + 7);
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.setTextColor(51, 65, 85);
+    doc.text(
+      "Electricidad · Seguridad electrónica · Climatización",
+      55,
+      y + 14
+    );
+    doc.text(
+      "Instalaciones, reparaciones, mantenimiento y asesoramiento técnico",
+      55,
+      y + 20
+    );
+
+    y = 54;
+
+    doc.setFillColor(241, 245, 249);
+    doc.roundedRect(20, y, pageWidth - 40, 32, 3, 3, "F");
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(13);
+    doc.setTextColor(15, 23, 42);
+    doc.text("Presupuesto", 25, y + 9);
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(51, 65, 85);
+    doc.text(`Cliente: ${clientName.trim() || "Sin especificar"}`, 25, y + 18);
+    doc.text(`Fecha: ${today}`, 25, y + 26);
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(10);
+    doc.setTextColor(14, 116, 144);
+    doc.text("GAM Soluciones Técnicas", pageWidth - 25, y + 9, {
+      align: "right",
     });
-  }
 
-  y += 8;
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(51, 65, 85);
+    doc.text("WhatsApp: +54 9 11 6262-3005", pageWidth - 25, y + 18, {
+      align: "right",
+    });
 
-  if (y > pageHeight - 70) {
+    y += 45;
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(12);
+    doc.setTextColor(15, 23, 42);
+    doc.text("Descripción de tareas", 20, y);
+
+    y += 8;
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(51, 65, 85);
+
+    const taskText = taskDescription.trim() || "Sin descripción detallada.";
+    const taskLines = doc.splitTextToSize(taskText, pageWidth - 48);
+
+    if (y + taskLines.length * 6 > pageHeight - 45) {
+      addNewPage();
+    }
+
+    doc.text(taskLines, 24, y);
+    y += taskLines.length * 6 + 10;
+
+    if (y > pageHeight - 45) {
+      addNewPage();
+    }
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(12);
+    doc.setTextColor(15, 23, 42);
+    doc.text("Detalle de materiales necesarios", 20, y);
+
+    y += 8;
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(51, 65, 85);
+
+    if (validMaterials.length === 0) {
+      doc.text("No incluye materiales o corren por cuenta del cliente.", 24, y);
+      y += 7;
+    } else {
+      validMaterials.forEach((material) => {
+        const materialName = material.name.trim() || "Material";
+
+        const line = `- ${materialName}`;
+        const lines = doc.splitTextToSize(line, pageWidth - 48);
+
+        if (y + lines.length * 6 > pageHeight - 45) {
+          addNewPage();
+
+          doc.setFont("helvetica", "bold");
+          doc.setFontSize(12);
+          doc.setTextColor(15, 23, 42);
+          doc.text("Detalle de materiales necesarios", 20, y);
+
+          y += 8;
+
+          doc.setFont("helvetica", "normal");
+          doc.setFontSize(10);
+          doc.setTextColor(51, 65, 85);
+        }
+
+        doc.text(lines, 24, y);
+        y += lines.length * 6;
+      });
+    }
+
+    y += 8;
+
+    if (y > pageHeight - 70) {
+      addNewPage();
+    }
+
+    doc.setFillColor(15, 23, 42);
+    doc.roundedRect(20, y, pageWidth - 40, 28, 3, 3, "F");
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(12);
+    doc.setTextColor(255, 255, 255);
+    doc.text("Materiales + mano de obra", 25, y + 11);
+
+    doc.setFontSize(17);
+    doc.text(formatCurrency(total), pageWidth - 25, y + 18, {
+      align: "right",
+    });
+
+    y += 42;
+
+    if (y > pageHeight - 40) {
+      addNewPage();
+    }
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(11);
+    doc.setTextColor(15, 23, 42);
+    doc.text("Servicios", 20, y);
+
+    y += 7;
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.setTextColor(51, 65, 85);
+
+    const servicesText =
+      "Electricidad domiciliaria y comercial · Seguridad electrónica · Cámaras · Alarmas · Control de accesos · Climatización · Instalación y mantenimiento de aire acondicionado";
+
+    const serviceLines = doc.splitTextToSize(servicesText, pageWidth - 40);
+    doc.text(serviceLines, 20, y);
+
     drawFooter();
-    doc.addPage();
-    y = 25;
-    drawPageFrame();
-  }
 
-  doc.setFillColor(15, 23, 42);
-  doc.roundedRect(20, y, pageWidth - 40, 28, 3, 3, "F");
+    doc.save(`presupuesto-gam-${Date.now()}.pdf`);
+  };
 
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(12);
-  doc.setTextColor(255, 255, 255);
-  doc.text("Materiales + mano de obra", 25, y + 11);
-
-  doc.setFontSize(17);
-  doc.text(formatCurrency(total), pageWidth - 25, y + 18, {
-    align: "right",
-  });
-
-  y += 42;
-
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(11);
-  doc.setTextColor(15, 23, 42);
-  doc.text("Servicios", 20, y);
-
-  y += 7;
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(9);
-  doc.setTextColor(51, 65, 85);
-
-  const servicesText =
-    "Electricidad domiciliaria y comercial · Seguridad electrónica · Cámaras · Alarmas · Control de accesos · Climatización · Instalación y mantenimiento de aire acondicionado";
-
-  const serviceLines = doc.splitTextToSize(servicesText, pageWidth - 40);
-  doc.text(serviceLines, 20, y);
-
-  drawFooter();
-
-  doc.save(`presupuesto-gam-${Date.now()}.pdf`);
-};
-
-  return (    
+  return (
     <section className="mt-10 rounded-2xl bg-white p-6 shadow-md">
       <h2 className="text-2xl font-bold text-slate-900">
         Formulario de presupuesto
-      </h2>      
+      </h2>
+
+      <div className="mt-6 grid grid-cols-1 gap-4">
+        <div>
+          <label className="text-sm font-semibold text-slate-700">
+            Cliente
+          </label>
+
+          <input
+            type="text"
+            value={clientName}
+            onChange={(event) => {
+              setClientName(event.target.value);
+              setCopyMessage("");
+            }}
+            placeholder="Ej: Juan Pérez"
+            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900 outline-none focus:border-sky-700"
+          />
+        </div>
+
+        <div>
+          <label className="text-sm font-semibold text-slate-700">
+            Descripción de tareas
+          </label>
+
+          <textarea
+            value={taskDescription}
+            onChange={(event) => {
+              setTaskDescription(event.target.value);
+              setCopyMessage("");
+            }}
+            rows="4"
+            placeholder="Ej: Instalación de cámaras, tendido de cableado, configuración de equipo y prueba de funcionamiento..."
+            className="mt-1 w-full resize-none rounded-md border border-slate-300 px-3 py-2 text-slate-900 outline-none focus:border-sky-700"
+          />
+        </div>
+      </div>
 
       <div className="mt-6 space-y-4">
         {materials.map((material, index) => (
