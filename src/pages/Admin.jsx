@@ -324,8 +324,9 @@ const Admin = () => {
                         </button>
                       </div>
                     </div>
-                  </article>
+                  </article>                  
                 ))}
+                <hr className="border-sky-500" />
               </div>
             )}
             <AdminQuickCalculator />
