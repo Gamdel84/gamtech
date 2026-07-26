@@ -362,18 +362,8 @@ const handleDownloadPdf = async () => {
   return (
     <section className="mt-10 rounded-2xl bg-white p-6 shadow-md">
       <h2 className="text-2xl font-bold text-slate-900">
-        Calculadora rápida
-      </h2>
-
-      <p className="mt-2 text-sm text-slate-600">
-        Para presupuestos donde GAM provee los materiales. Cargá los materiales
-        con precios actualizados y sumá la mano de obra.
-      </p>
-
-      <p className="mt-2 text-xs text-slate-500">
-        Tip: Tab avanza por los campos. Enter en nombre pasa al precio. Enter en
-        precio agrega otro material.
-      </p>
+        Formulario de presupuesto
+      </h2>      
 
       <div className="mt-6 space-y-4">
         {materials.map((material, index) => (
@@ -464,17 +454,17 @@ const handleDownloadPdf = async () => {
 
       <div className="mt-6 rounded-xl bg-slate-900 p-5 text-white">
         <div className="flex justify-between gap-4 text-sm text-slate-300">
-          <span>Subtotal materiales</span>
+          <span>Subtotal materiales: </span>
           <strong>{formatCurrency(subtotalMaterials)}</strong>
         </div>
 
         <div className="mt-2 flex justify-between gap-4 text-sm text-slate-300">
-          <span>Mano de obra</span>
+          <span>Mano de obra: </span>
           <strong>{formatCurrency(laborAmount)}</strong>
         </div>
 
         <div className="mt-4 flex justify-between gap-4 border-t border-slate-700 pt-4 text-xl font-bold">
-          <span>Total estimado</span>
+          <span>Total: </span>
           <span>{formatCurrency(total)}</span>
         </div>
       </div>
