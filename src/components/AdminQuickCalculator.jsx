@@ -361,6 +361,7 @@ const handleDownloadPdf = async () => {
 
   return (
     <section className="mt-10 rounded-2xl bg-white p-6 shadow-md">
+      <hr className="border-sky-500" />
       <h2 className="text-2xl font-bold text-slate-900">
         Formulario de presupuesto
       </h2>      
