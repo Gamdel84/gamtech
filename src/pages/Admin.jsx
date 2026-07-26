@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 import AdminQuickCalculator from "../components/AdminQuickCalculator";
 
 const Admin = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [checkingSession, setCheckingSession] = useState(true);
 
@@ -123,10 +125,18 @@ const Admin = () => {
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      console.error("Error al cerrar sesión:", error.message);
+      setAdminMessage("No se pudo cerrar sesión.");
+      return;
+    }
+
     setUser(null);
     setReviews([]);
     setAdminMessage("");
+    navigate("/");
   };
 
   const deleteReview = async (id) => {
